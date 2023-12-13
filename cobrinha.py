@@ -8,7 +8,11 @@ screen = pygame.display.set_mode((800, 800))
 #nome do jogo
 pygame.display.set_caption('Cobrinha')
 
-cobra = [(pygame.image.load('C:\Users\giov_\Downloads\Programação\pygame\acobra.png'))]
+#cobra e seu tamanho
+def a_cobra(imagem_cobra):
+    cobra = [(pygame.image.load('acobra.png'))]
+    imagem_cobra = pygame.transform.scale(cobra, (20, 20))
+    return imagem_cobra
 
 #tela preta
 ctela = r'C:\Users\giov_\Downloads\Programação\pygame\fundo.png'
