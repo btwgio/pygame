@@ -1,14 +1,9 @@
 import pygame
+from pygame.locals import *
 import sys
 import random
 
 pygame.init()
-
-UP = 0
-RIGHT = 1
-DOWN = 2
-LEFT = 3
-#comandos <^>
 
 #tamanho da tela
 screen = pygame.display.set_mode((600, 600))
@@ -38,17 +33,30 @@ imagem_maca = pygame.transform.scale(imagem_maca, (25, 25))
 posicao_maca = (random.randint(0, 590), random.randint(0, 590))
 posicao_cobra = (random.randint(0, 590), random.randint(0, 590))
 
+x = posicao_cobra[0]
+y = posicao_cobra[1]
+
 while True:
-    for evento in pygame.event.get():
+    relogio.tick(30)
+    for event in pygame.event.get():
         #fechar o jogo
-        if evento.type == pygame.QUIT:
+        if event.type == pygame.QUIT:
             pygame.quit()
             sys.exit()
-        keys = pygame.key.get_pressed() #controles do jogo
+
+    keys = pygame.key.get_pressed()  #controles do jogo
+    if keys[K_DOWN]:
+        posicao_cobra[1] += 20
+    if keys[K_LEFT]:
+        posicao_cobra[0] -= 20
+    if keys[K_RIGHT]:
+        posicao_cobra[0] += 20
+    if keys[K_UP]:
+        posicao_cobra[1] -= 20
 
     screen.fill((0, 0, 0))
+#desenho da cobra e da maçã
     desenha_cobra(imagem_cobra, posicao_cobra)
-    
     desenha_maca(imagem_maca, posicao_maca)
 
     pygame.display.update()

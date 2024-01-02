@@ -1,0 +1,46 @@
+import pygame
+from pygame.locals import *
+import sys
+import random
+
+pygame.init()
+
+#tamanho da tela
+largura = 600
+altura = 600
+#posição da cobra
+posx_cobra = random.randint(0,590)
+posy_cobra = random.randint(0,590)
+velocidade = 20 #da cobra
+x_controle = velocidade #começa andando para direita
+y_controle = 0 
+#tela
+screen = pygame.display.set_mode((altura, largura))
+#nome do jogo
+pygame.display.set_caption('Cobrinha')
+relogio = pygame.time.Clock()
+#tela preta
+tela = pygame.image.load('fundo.png')
+
+
+
+
+while True:
+    relogio.tick(30)
+    for event in pygame.event.get():
+        #fechar o jogo
+        if event.type == QUIT:
+            pygame.quit()
+            sys.exit()
+        if event.type == KEYDOWN: #teclas
+            if event.key == K_LEFT:
+                if x_controle == velocidade: #não vai andar para direção oposta
+                    pass
+                else: 
+                    x_controle = -velocidade 
+
+
+
+
+    cobra = pygame.draw.rect(screen, (255, 255, 255), (posx_cobra, posy_cobra, 20, 20))    
+    pygame.display.update()
