@@ -26,8 +26,6 @@ screen = pygame.display.set_mode((altura, largura))
 #nome do jogo
 pygame.display.set_caption('Cobrinha')
 relogio = pygame.time.Clock()
-#tela preta
-tela = pygame.image.load('fundo.png')
 
 imagem_maca = pygame.image.load('maca.png').convert()
 imagem_maca = pygame.transform.scale(imagem_maca, (20, 20)) 
