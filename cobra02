@@ -15,7 +15,10 @@ posy_cobra = random.randint(0,590)
 posx_maca = random.randint(0,590)
 posy_maca = random.randint(0,590)
 
-velocidade = 20 #da cobra
+fonte = pygame.font.SysFont('arial', 30, True, False) 
+pontos = 0 
+
+velocidade = 15 #da cobra
 x_controle = velocidade #começa andando para direita
 y_controle = 0 
 #tela
@@ -40,12 +43,13 @@ def aumenta_cobra(corpo):
 while True:
     relogio.tick(30)
     screen.fill((0,0,0))
+    mensagem = f'Pontos: {pontos}'
+    textf = fonte.render(mensagem,True,(255,255,255))
     for event in pygame.event.get():
         #fechar o jogo
         if event.type == QUIT:
             pygame.quit()
             sys.exit()
-
         if event.type == KEYDOWN: #teclas
             if event.key == K_LEFT:
                 if x_controle == velocidade: #não vai andar para direção oposta
@@ -89,7 +93,9 @@ while True:
     if cobra.colliderect(imagem_macan):
         posx_maca = random.randint(0,590)
         posy_maca = random.randint(0,590)
+        imagem_macan = imagem_maca.get_rect(x = posx_maca, y = posy_maca)
         comprimento += 1
+        pontos +=1
 
     cabeca = [] #a cabeça sempre vai ser apagada
     cabeca.append(posx_cobra)
@@ -100,6 +106,6 @@ while True:
         del corpo[0]
     aumenta_cobra(corpo)
     screen.blit(imagem_maca, imagem_macan)
-
+    screen.blit(textf, (0,0))
   
     pygame.display.update()
