@@ -11,6 +11,10 @@ altura = 600
 #posição da cobra
 posx_cobra = random.randint(0,590)
 posy_cobra = random.randint(0,590)
+
+posx_maca = random.randint(0,590)
+posy_maca = random.randint(0,590)
+
 velocidade = 20 #da cobra
 x_controle = velocidade #começa andando para direita
 y_controle = 0 
@@ -22,25 +26,80 @@ relogio = pygame.time.Clock()
 #tela preta
 tela = pygame.image.load('fundo.png')
 
+imagem_maca = pygame.image.load('maca.png').convert()
+imagem_maca = pygame.transform.scale(imagem_maca, (20, 20)) 
+imagem_macan = imagem_maca.get_rect(x = posx_maca, y = posy_maca) #transformar em rect
 
+corpo = []
+comprimento = 5 #cinco quadradinhos
 
+def aumenta_cobra(corpo):
+    for xy in corpo:
+        pygame.draw.rect(screen, (255,255,255), (xy[0], xy[1], 20,20))
 
 while True:
     relogio.tick(30)
+    screen.fill((0,0,0))
     for event in pygame.event.get():
         #fechar o jogo
         if event.type == QUIT:
             pygame.quit()
             sys.exit()
+
         if event.type == KEYDOWN: #teclas
             if event.key == K_LEFT:
                 if x_controle == velocidade: #não vai andar para direção oposta
                     pass
                 else: 
                     x_controle = -velocidade 
-
-
-
-
+                    y_controle = 0
+            if event.key == K_RIGHT:
+                if x_controle == -velocidade:
+                    pass
+                else:
+                    x_controle = velocidade
+                    y_controle = 0
+            if event.key == K_UP:
+                if y_controle == velocidade:
+                    pass
+                else:
+                    x_controle = 0
+                    y_controle = -velocidade
+            if event.key == K_DOWN:
+                if y_controle == -velocidade:
+                    pass
+                else:
+                    x_controle = 0
+                    y_controle = velocidade
+    #movimentação da cobra
+    posx_cobra = posx_cobra + x_controle
+    posy_cobra = posy_cobra + y_controle 
+    #passar por um lado pro outro
+    if posx_cobra<0:
+        posx_cobra = 580
+    if posx_cobra>600:
+        posx_cobra = 0
+    if posy_cobra<0:
+        posy_cobra = 580
+    if posy_cobra>600:
+        posy_cobra = 0
+    #lista aumentando a cobra
+    
     cobra = pygame.draw.rect(screen, (255, 255, 255), (posx_cobra, posy_cobra, 20, 20))    
+    if cobra.colliderect(imagem_macan):
+        posx_maca = random.randint(0,590)
+        posy_maca = random.randint(0,590)
+        comprimento += 1
+
+    cabeca = [] #a cabeça sempre vai ser apagada
+    cabeca.append(posx_cobra)
+    cabeca.append(posy_cobra)
+    corpo.append(cabeca) #o corpo vai seguir a cabeça
+
+    if len(corpo) > comprimento:
+        del corpo[0]
+    aumenta_cobra(corpo)
+    screen.blit(imagem_maca, imagem_macan)
+
+  
     pygame.display.update()
