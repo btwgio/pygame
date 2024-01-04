@@ -94,6 +94,7 @@ while True:
         imagem_macan = imagem_maca.get_rect(x = posx_maca, y = posy_maca)
         comprimento += 1
         pontos +=1
+        velocidade +=2
 
     cabeca = [] #a cabeça sempre vai ser apagada
     cabeca.append(posx_cobra)
